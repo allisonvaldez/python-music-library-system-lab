@@ -19,7 +19,7 @@ class Song:
         # Call all class methods in order to update global tracking when a song is created
         Song.add_song_to_count()
         Song.add_to_genres(genre)
-        Song.add_to_artists(artists)
+        Song.add_to_artists(artist)        # ✅ fixed: was 'artists' (undefined), now 'artist'
         Song.add_to_genre_count(genre)
         Song.add_to_artist_count(artist)
     
@@ -27,11 +27,20 @@ class Song:
     @classmethod
     def add_song_to_count(cls):
         cls.count += 1
+
+    # Class method to add genre to list if it is not there
+    @classmethod
+    def add_to_genres(cls, genre):         # ✅ added: was missing entirely
+        # Perform error handling to check if the genre is already there
+        if genre not in cls.genres:        # prevent duplicates
+            cls.genres.append(genre)
     
-    # Class method to add artist list if it is not there
+    # Class method to add artist to list if it is not there
     @classmethod
     def add_to_artists(cls, artist):
-        cls.artists.append(artist)
+        # Perform error handling to check if the artist is already there
+        if artist not in cls.artists:      # ✅ added duplicate check
+            cls.artists.append(artist)
     
     # Class method to update the genre_count
     @classmethod
